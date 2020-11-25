@@ -1,5 +1,5 @@
 public interface FrogCommand {
-    boolean _do();
+    boolean doIt();
 
-    boolean _undo();
+    boolean undoIt();
 }

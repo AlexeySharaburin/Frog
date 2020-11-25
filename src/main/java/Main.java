@@ -13,6 +13,8 @@ public class Main {
 
         Frog frog = new Frog();
 
+        boolean jump = false;
+
         System.out.println("Добрый день! Начинаем прыжки!");
         paintPosition(frog.getPosition());
 
@@ -33,11 +35,15 @@ public class Main {
                 break;
             }
 
+// вот если попросить прыгнуть лягушку за пределы экарана,
+// она не прыгнет, но << на эту команду заставит её прыгнуть
+// в другую сторону на это же количество шагов
+
             if (enter.equals("<<")) { // Undo (отмени последнюю команду)
-                if (curCommand < 0) {
+                if ((curCommand < 0) || !jump) {
                     System.out.println("Нечего отменять!");
                 } else {
-                    commands.get(curCommand)._undo();
+                    commands.get(curCommand).undoIt();
                     curCommand--;
                 }
             }
@@ -48,7 +54,7 @@ public class Main {
                     System.out.println("Нечего отменять!");
                 } else {
                     curCommand++;
-                    commands.get(curCommand)._do();
+                    commands.get(curCommand).doIt();
                 }
             }
 
@@ -57,7 +63,7 @@ public class Main {
                 if (curCommand <= 0) {
                     System.out.println("Нечего повторять!");
                 } else {
-                    commands.get(curCommand)._do();
+                    commands.get(curCommand).doIt();
                     curCommand++;
                 }
             }
@@ -68,7 +74,7 @@ public class Main {
                 FrogCommand cmd = FrogCommands.jumpRightCommand(frog, stepsRight);
                 curCommand++;
                 commands.add(cmd);
-                cmd._do();
+                jump = cmd.doIt();
             }
 
             if (enter.equals("--")) { // jump left
@@ -77,12 +83,8 @@ public class Main {
                 FrogCommand cmd = FrogCommands.jumpLeftCommand(frog, -stepsLeft);
                 curCommand++;
                 commands.add(cmd);
-                cmd._do();
+                jump = cmd.doIt();
             }
-
-            System.out.println("Текущее число команд: " + commands.size());
-            System.out.println("Текущие команды: " + commands.toString());
-            System.out.println("Текущее состояние счётчика команд: " + curCommand);
 
             paintPosition(frog.getPosition());
 

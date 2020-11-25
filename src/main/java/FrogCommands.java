@@ -5,19 +5,23 @@ public class FrogCommands {
         FrogCommand frogCommand = new FrogCommand() {
 
             @Override
-            public boolean _do() {
-                frog.jump(steps);
-                return true;
+            public boolean doIt() {
+                if (frog.jump(steps)) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             @Override
-            public boolean _undo() {
+            public boolean undoIt() {
                 frog.jump(-steps);
                 return true;
             }
         };
 
         return frogCommand;
+
 
     }
 
@@ -26,13 +30,16 @@ public class FrogCommands {
         FrogCommand frogCommand = new FrogCommand() {
 
             @Override
-            public boolean _do() {
-                frog.jump(steps);
-                return true;
+            public boolean doIt() {
+                if (frog.jump(steps)) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
 
             @Override
-            public boolean _undo() {
+            public boolean undoIt() {
                 frog.jump(-steps);
                 return true;
             }
